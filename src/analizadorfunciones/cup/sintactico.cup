@@ -1,0 +1,124 @@
+package analizadorfunciones.cup;
+
+import java_cup.runtime.Symbol;
+import java.util.ArrayList;
+ parser code {:
+public int[] arrayX;
+public int[] arrayY;
+
+public  void setArrayX(int[] valores){
+        arrayX=valores;
+        arrayY=new int[arrayX.length];
+    }
+public  int[] getArrayY(){
+        return arrayY;
+}
+
+
+     public void syntax_error(Symbol s){
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        System.out.println("Error Sintactico Recuperado\n");
+        System.out.println("\t \tLexema: "+ lexema+"\n");
+        System.out.println("\t \tFila: "+ fila+"\n");
+        System.out.println("\t \tColumna: "+ columna+"\n");
+
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception{
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+        System.out.println("Error Sintactico Panic Mode\n");
+        System.out.println("\t \tLexema: "+ lexema+"\n");
+        System.out.println("\t \tFila: "+ fila+"\n");
+        System.out.println("\t \tColumna: "+ columna+"\n");
+
+    }
+    
+
+
+:}
+
+action code {:
+
+
+
+:}
+
+/* Terminals (tokens returned by the scanner). */
+terminal FUNCION, X, IGUAL, SUMA, RESTA, POTENCIA, ERROR;
+
+terminal String ENTERO;
+
+/* Non-terminals */
+non terminal Inicio,Expresiones, Operacion, Expresion,x;
+
+start with Inicio;
+
+Inicio 		::= FUNCION IGUAL Expresiones:exps{:int[] temp=(int[])exps;
+                                                    for (int i = 0; i < arrayY.length; i++) {
+                                                arrayY[i]=temp[i];
+                                            }:};
+
+Expresiones      ::=     Expresiones:exs Operacion:op Expresion:ex {:int[] exp=(int[])ex;
+                                                                    int[] exps=(int[])exs;
+                                                                    int[] temp=new int[arrayX.length];
+                                                                    if((Integer)op==1){
+                                                                        for (int i = 0; i < temp.length; i++) {
+                                                                            temp[i]=exps[i]+exp[i];
+                                                                        }  
+                                                                    }else{
+                                                                        for (int i = 0; i < temp.length; i++) {
+                                                                            temp[i]=exps[i]-exp[i];
+                                                                        }  
+                                                                    }RESULT=temp;:}
+                    |Expresion:ex{:RESULT=ex;:}
+                    
+                    |RESTA Expresion:ex{:   int[] temp=new int[arrayX.length];
+                                            for (int i = 0; i < arrayX.length; i++) {
+                                                int a = arrayX[i];
+                                                a*=-1;
+                                               temp[i]=a;
+                                            }
+                                            RESULT=temp;:};
+Operacion      ::=SUMA{:RESULT=1;:}
+                    |RESTA{:RESULT=2;:};
+
+Expresion       ::=ENTERO:entero x:x{:  int[] temp=new int[arrayX.length];
+                                        int[] valX=(int[])x;
+                                        for (int i = 0; i < temp.length; i++) {
+                                            int a = valX[i];
+                                            a=a*Integer.valueOf(entero);
+                                            temp[i]=a;
+                                        }
+                                        RESULT=temp;:}
+
+               |ENTERO:entero{:     int[] temp=new int[arrayX.length];
+                                    for (int i = 0; i < temp.length; i++) {         
+                                        temp[i]=Integer.valueOf(entero);
+                                    }
+                                    RESULT=temp;:}
+                |x:x{:  int[] temp=new int[arrayX.length];
+                                        int[] valX=(int[])x;
+                                        for (int i = 0; i < temp.length; i++) {
+                                            int a = valX[i];
+                                            temp[i]=a;
+                                        }
+                                        RESULT=temp;:};
+
+x               ::=X POTENCIA ENTERO:entero{:int[] temp=new int[arrayX.length];
+                                            for (int i = 0; i < temp.length; i++) {
+                                                int a = arrayX[i];
+                                                a=(int)Math.pow(a, Integer.valueOf(entero));
+                                                temp[i]=a;
+                                            }
+                                            RESULT=temp;:}
+
+                |X {:int[] temp=new int[arrayX.length];
+                for (int i = 0; i < temp.length; i++) {
+                    
+                    temp[i]=arrayX[i];
+                }
+                RESULT=temp;:};

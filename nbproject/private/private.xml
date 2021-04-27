@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/cup/sintactico.cup</file>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/gui/PantallaPrincipal.java</file>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/jflex/AnalizadorLexico.java</file>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/AnalizadorFunciones.java</file>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/jflex/lexico.jflex</file>
+            <file>file:/home/sergio/NetBeansProjects/AnalizadorFunciones/src/analizadorfunciones/cup/parser.java</file>
+        </group>
+    </open-files>
+</project-private>
